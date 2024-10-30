@@ -7,10 +7,11 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
-  if (!isOpen) return null;
+const Modal: React.FC<ModalProps> = ({ title, children,isOpen ,onClose}) => {
 
   return (
+    <>
+    {isOpen &&(
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 mx-4">
         <div className="flex justify-between items-center mb-4">
@@ -36,22 +37,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
           </button>
         </div>
         <div className="mb-4">{children}</div>
-        <div className="flex justify-end gap-x-4">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-700 focus:outline-none"
-          >
-            Close
-          </button>
-          <button
-            onClick={onClose}
-            className="px-4 py-2 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-800 focus:outline-none"
-          >
-            Add task
-          </button>
-        </div>
       </div>
     </div>
+    )}
+    </>
   );
 };
 

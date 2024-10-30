@@ -34,7 +34,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({ title, tasks, color }) => {
         </h2>
         <div className="space-y-4">
           {tasks.map((task) => (
-            <div key={task.id} className="p-4 bg-gray-200 rounded-lg shadow-sm">
+            <div key={task.id} className="p-4 bg-gray-100 rounded-lg shadow-sm">
               <h3 className="font-semibold mt-2">{task.title}</h3>
               <p className="text-sm text-gray-500">{task.description}</p>
               <div className="flex items-center mt-3 space-x-4 text-gray-400 text-xs">

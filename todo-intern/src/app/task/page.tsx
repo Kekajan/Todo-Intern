@@ -4,10 +4,12 @@ import { Button } from "@/libs/components/button";
 import Searchbar from "@/libs/components/searchbar/searchbar";
 import TaskTable from "@/libs/components/taskTable/taskTable";
 import Modal from "@/libs/components/modal/modal";
+import { TaskForm } from "./_components";
 
 const Task = () => {
   const [searchText, setSearchText] = useState<string>("");
-  const [isModalOpen, setIsModalOpen] = useState<boolean>();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [tasksList, setTasksList] = useState([]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -15,6 +17,14 @@ const Task = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleTaskSubmit = () => {
+    // setTasksList((prevTasks) => ({
+    //   ...prevTasks,
+    //   todo: [...prevTasks.todo, { id: Date.now(), ...newTask }],
+    // }));
+    closeModal();
   };
 
   const tasks = {
@@ -141,8 +151,11 @@ const Task = () => {
       <div className="pt-12 h-80">
         <TaskTable tasks={tasks} />
       </div>
-      <Modal isOpen={isModalOpen} onClose={closeModal} title="Create tasks">
-        <p>This is a simple modal dialog using Tailwind CSS.</p>
+      {/* <Modal isOpen={isModalOpen} onClose={closeModal} title="Create tasks">
+        <TaskForm />
+      </Modal> */}
+      <Modal isOpen={isModalOpen} onClose={closeModal} title="Create Task">
+        <TaskForm  onClose={closeModal}/>
       </Modal>
     </div>
   );

@@ -20,7 +20,7 @@ export const Button: React.FC<buttonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`${buttonClass} font-bold py-2 px-4 rounded`}
+      className={`${buttonClass} font-bold py-2 px-4 rounded ${className}`}
     >
       {text}
     </button>
