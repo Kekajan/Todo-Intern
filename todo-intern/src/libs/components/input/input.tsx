@@ -5,7 +5,7 @@ interface InputProps {
     label?: string;
     icon?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | null;
     value?: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;  // Updated here
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     type?: string;
     name?: string;
     className?: string;

@@ -1,4 +1,3 @@
-    // src/types/react-form-buddy.d.ts
 declare module 'react-form-buddy' {
     const FormHandler: (submitForm: any, validate: any) => {
         handleChange: (e: any) => void;
