@@ -55,7 +55,7 @@ const TodoCard: React.FC<TodoCardProps> = ({ task, index }) => {
           className={`p-4 bg-slate-200 rounded-md shadow-sm mb-3 ${color}`}
         >
           <div className="flex flex-row justify-end">
-            <button onClick={deleteMethod}>
+            <button onClick={deleteMethod} className="text-2xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/libs/components/button/button";
 import Input from "@/libs/components/input/input";
 import FormHandler from "react-form-buddy";
 import { useTaskStore } from "@/store/task.store";
-import axios from "axios";
 import { addTask } from "@/services";
 
 interface TaskFormProps {
@@ -15,11 +14,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   onClose,
   refreshTasks,
 }) => {
-  const [taskData, setTaskData] = useState({ title: "", description: "" });
-
   const { tasks, setTasksAction } = useTaskStore();
-
-  console.log("tasks", tasks);
 
   const validate = (values: any) => {
     let errors: any = {};
@@ -32,20 +27,18 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     return errors;
   };
 
-
-
   const submitForm = async () => {
     const newTask = {
       title: values.title,
       description: values.description,
     };
-  
+
     await addTask(newTask, (response) => {
       if (response.status === 201 && response.data) {
         setTasksAction([...tasks, response.data]);
         console.log("Form submitted successfully!", response.data);
-        refreshTasks(); 
-        onClose(); 
+        refreshTasks();
+        onClose();
       } else {
         console.error("Error creating task:", response.statusText);
       }
@@ -57,10 +50,6 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     validate
   );
 
-  console.log("Values:", values);
-  console.log("Errors:", errors);
-  console.log("tasks keka", tasks);
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <Input
@@ -71,7 +60,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
         onChange={handleChange}
         className="text-gray-900"
       />
-      <div className="text-red-500">{errors.title}</div>    
+      <div className="text-red-500">{errors.title}</div>
       <label className="block text-sm font-medium text-gray-700">
         Description
       </label>

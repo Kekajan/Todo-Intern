@@ -1,12 +1,8 @@
-
-
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import axios from "axios";
 import TodoCard from "./todoCard";
 import { ITask } from "@/libs/types";
 import { updateTask } from "@/services";
-
 
 const TaskTable: React.FC<{
   tasks: ITask[];
@@ -112,20 +108,11 @@ const TaskTable: React.FC<{
 
     const status = destination.droppableId;
     const taskId = draggableId;
-    const statusData:any = {
-      status: status
-    }
+    const statusData: any = {
+      status: status,
+    };
 
-    updateTask(taskId,statusData,(res:any)=>{
-
-    })
-
-    // try {
-    //   await axios.put(`http://localhost:5000/api/task/${taskId}`, { status });
-    //   console.log(`Updated task ${taskId} to status ${status}`);
-    // } catch (error) {
-    //   console.error("Error updating task status:", error);
-    // }
+    updateTask(taskId, statusData, (res: any) => {});
   };
 
   function filterTaskIdByStatus(status: any, tasks: any) {
@@ -134,12 +121,12 @@ const TaskTable: React.FC<{
       .map((task: any) => task._id);
   }
 
-
-  console.log("vdfgd", tasks)
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex space-x-4 p-4 min-w-96 overflow-scroll">
+      <div
+        className="flex space-x-4 p-4 min-w-96"
+        style={{ height: "calc(100vh - 172px)" }}
+      >
         {data?.columnOrder?.map((columnId: any) => {
           const column = data.columns[columnId];
           const tasks = column?.taskIds?.map(
@@ -158,9 +145,8 @@ const TaskTable: React.FC<{
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="w-full md:w-1/3 items-center m-3 p-5 px-10 bg-gray-100 rounded-lg overflow-auto max-h-screen w-screen overflow-scroll"
+                  className="w-screen md:w-1/3 items-center m-3 p-5 px-10 bg-gray-100 rounded-lg overflow-auto max-h-screen"
                 >
-        
                   <div className="w-full flex justify-between items-center">
                     <h4
                       className={`flex justify-center w-full text-lg font-bold ${
