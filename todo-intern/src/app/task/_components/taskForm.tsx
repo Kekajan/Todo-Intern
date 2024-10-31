@@ -4,7 +4,7 @@ import Input from "@/libs/components/input/input";
 import FormHandler from "react-form-buddy";
 import { useTaskStore } from "@/store/task.store";
 import axios from "axios";
-import TextArea from "@/libs/components/textArea/textArea";
+import { addMovie } from "@/services";
 
 interface TaskFormProps {
   onClose: () => void;
@@ -32,26 +32,50 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     return errors;
   };
 
+  // const submitForm = async () => {
+  //   try {
+  //     const newTask = {
+  //       title: values.title,
+  //       description: values.description,
+  //     };
+  
+  //     const response = await axios.post(
+  //       "http://localhost:5000/api/task",
+  //       newTask
+  //     );
+  
+  //     // Check for duplicate task IDs
+  //     const isDuplicate = tasks.some((task) => task._id === response.data.id);
+  //     if (!isDuplicate) {
+  //       setTasksAction([...tasks, response.data]);
+  //     }
+  
+  //     console.log("Form submitted successfully!", response.data);
+  
+  //     refreshTasks();
+  //     onClose();
+  //   } catch (error) {
+  //     console.error("Error creating task:", error);
+  //   }
+  // };
+  
+
   const submitForm = async () => {
-    try {
-      const newTask = {
-        title: values.title,
-        description: values.description,
-      };
-
-      const response = await axios.post(
-        "http://localhost:5000/api/task",
-        newTask
-      );
-      setTasksAction([...tasks, response.data]);
-      console.log("Form submitted successfully!", response.data);
-
-      // onClose && onClose();
-      refreshTasks();
-      onClose();
-    } catch (error) {
-      console.error("Error creating task:", error);
-    }
+    const newTask = {
+      title: values.title,
+      description: values.description,
+    };
+  
+    await addMovie(newTask, (response) => {
+      if (response.status === 201 && response.data) {
+        setTasksAction([...tasks, response.data]);
+        console.log("Form submitted successfully!", response.data);
+        refreshTasks(); 
+        onClose(); 
+      } else {
+        console.error("Error creating task:", response.statusText);
+      }
+    });
   };
 
   const { handleChange, handleSubmit, values, errors } = FormHandler(
@@ -82,7 +106,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
         placeholder="Enter task description"
         value={values.description || ""}
         onChange={handleChange}
-        className="text-gray-900 mt-1 block w-full rounded-md border-gray-50 shadow-sm focus:border-indigo-50 focus:ring-indigo-50 sm:text-sm"
+        className="text-gray-900 mt-1 block w-full rounded-md border-gray-50 shadow-sm focus:border-indigo-50 focus:ring-indigo-50 sm:text-sm p-2"
       />
       <div className="text-red-500">{errors.description}</div>
       <div className="flex justify-end gap-x-4 mt-64">

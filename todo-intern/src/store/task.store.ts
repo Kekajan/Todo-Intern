@@ -17,6 +17,6 @@ export const useTaskStore = create<State & Action>((set) => ({
   ...initialState,
   setTasksAction: (newTasks: ITask[]) =>
     set((state) => ({
-      tasks: [...state.tasks, ...newTasks],
+      tasks: [...newTasks],
     })),
 }));

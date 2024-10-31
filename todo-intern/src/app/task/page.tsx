@@ -1,16 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Button } from "@/libs/components/button";
-import Searchbar from "@/libs/components/searchbar/searchbar";
 import TaskTable from "@/libs/components/taskTable/taskTable";
 import Modal from "@/libs/components/modal/modal";
 import { TaskForm } from "./_components";
-import axios from "axios";
+import { useTaskStore } from "@/store/task.store";
+import { getTaskDetails } from "@/services";
 
 const Task = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [tasks, setTasks] = useState([]);
+  const {tasks,setTasksAction}=useTaskStore()
   const [taskUpdated, setTaskUpdated] = useState(false);
 
   const openModal = () => {
@@ -24,18 +24,16 @@ const Task = () => {
   const refreshTasks = () => setTaskUpdated((prev) => !prev);
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/tasks");
-        setTasks(response.data);
-        console.log("Updated tasks:", response.data);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
+    getTaskDetails((res) => {
+      if (res?.data) {
+        setTasksAction(res.data);
+        console.log(res.data, "Fetched Movie Data");
+      } else {
+        console.error("Failed to fetch movies:", res.statusText);
       }
-    };
+    });
+  }, [ taskUpdated]);
 
-    fetchTasks();
-  }, [setTasksAction, taskUpdated]);
 
   return (
     <div className="container mx-auto h-screen">
