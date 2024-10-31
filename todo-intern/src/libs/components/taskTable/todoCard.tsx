@@ -70,8 +70,8 @@ const TodoCard: React.FC<TodoCardProps> = ({ task, index }) => {
             </button>
           </div>
 
-          <h3 className="font-semibold mt-2">{task.title}</h3>
-          <p className="text-sm text-gray-500">{task.description}</p>
+          <h3 className="font-semibold mt-2 break-words">{task.title}</h3>
+          <p className="text-sm text-gray-500 break-words">{task.description}</p>
         </div>
       )}
     </Draggable>

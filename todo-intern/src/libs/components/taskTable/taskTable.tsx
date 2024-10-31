@@ -139,7 +139,7 @@ const TaskTable: React.FC<{
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex space-x-4 p-4">
+      <div className="flex space-x-4 p-4 min-w-96 overflow-scroll">
         {data?.columnOrder?.map((columnId: any) => {
           const column = data.columns[columnId];
           const tasks = column?.taskIds?.map(
@@ -158,11 +158,9 @@ const TaskTable: React.FC<{
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="w-full md:w-1/3 items-center m-3 p-5 px-10 bg-gray-100 rounded-lg overflow-auto max-h-screen"
+                  className="w-full md:w-1/3 items-center m-3 p-5 px-10 bg-gray-100 rounded-lg overflow-auto max-h-screen w-screen overflow-scroll"
                 >
-                  {/* <div className="w-full flex justify-between items-center">
-                    <h4 className={`text-lg font-bold`}>{column.title}</h4>
-                  </div> */}
+        
                   <div className="w-full flex justify-between items-center">
                     <h4
                       className={`flex justify-center w-full text-lg font-bold ${
