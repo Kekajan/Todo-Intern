@@ -32,33 +32,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     return errors;
   };
 
-  // const submitForm = async () => {
-  //   try {
-  //     const newTask = {
-  //       title: values.title,
-  //       description: values.description,
-  //     };
-  
-  //     const response = await axios.post(
-  //       "http://localhost:5000/api/task",
-  //       newTask
-  //     );
-  
-  //     // Check for duplicate task IDs
-  //     const isDuplicate = tasks.some((task) => task._id === response.data.id);
-  //     if (!isDuplicate) {
-  //       setTasksAction([...tasks, response.data]);
-  //     }
-  
-  //     console.log("Form submitted successfully!", response.data);
-  
-  //     refreshTasks();
-  //     onClose();
-  //   } catch (error) {
-  //     console.error("Error creating task:", error);
-  //   }
-  // };
-  
+
 
   const submitForm = async () => {
     const newTask = {

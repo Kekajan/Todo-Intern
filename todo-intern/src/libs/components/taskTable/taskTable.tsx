@@ -5,6 +5,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import axios from "axios";
 import TodoCard from "./todoCard";
 import { ITask } from "@/libs/types";
+import { updateTask } from "@/services";
 
 
 const TaskTable: React.FC<{
@@ -111,13 +112,20 @@ const TaskTable: React.FC<{
 
     const status = destination.droppableId;
     const taskId = draggableId;
-
-    try {
-      await axios.put(`http://localhost:5000/api/task/${taskId}`, { status });
-      console.log(`Updated task ${taskId} to status ${status}`);
-    } catch (error) {
-      console.error("Error updating task status:", error);
+    const statusData:any = {
+      status: status
     }
+
+    updateTask(taskId,statusData,(res:any)=>{
+
+    })
+
+    // try {
+    //   await axios.put(`http://localhost:5000/api/task/${taskId}`, { status });
+    //   console.log(`Updated task ${taskId} to status ${status}`);
+    // } catch (error) {
+    //   console.error("Error updating task status:", error);
+    // }
   };
 
   function filterTaskIdByStatus(status: any, tasks: any) {

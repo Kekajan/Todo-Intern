@@ -58,12 +58,12 @@ export const addTask = async (
 
 export const updateTask = async (
   taskId: string,
-  task: ITask,
+  data: any,
   callback: (response: ApiResponse<ITask>) => void
 ): Promise<void> => {
   const endpoint = `${process.env.api_base_url}/task/${taskId}`;
   try {
-    const response = await http.put<ITask>(endpoint, task);
+    const response = await http.put<ITask>(endpoint, data);
     callback({
       data: response.data,
       status: response.status,
