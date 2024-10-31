@@ -26,19 +26,19 @@ export const getTaskDetails = async (
       status: error.response?.status || 500,
       statusText:
         error.response?.statusText ||
-        "An error occurred while fetching movies.",
+        "An error occurred while fetching Tasks.",
     };
     callback(fallbackResponse);
   }
 };
 
-export const addMovie = async (
-  movie: ITask,
+export const addTask = async (
+  task: ITask,
   callback: (response: ApiResponse<ITask>) => void
 ): Promise<void> => {
   const endpoint = `${process.env.api_base_url}/task`;
   try {
-    const response = await http.post<ITask>(endpoint, movie);
+    const response = await http.post<ITask>(endpoint, task);
     callback({
       data: response.data,
       status: response.status,
@@ -50,57 +50,57 @@ export const addMovie = async (
       status: error.response?.status || 500,
       statusText:
         error.response?.statusText ||
-        "An error occurred while adding the movie.",
+        "An error occurred while adding the Tasks.",
     };
     callback(fallbackResponse);
   }
 };
 
-// export const updateMovie = async (
-//   movieId: string,
-//   movie: IMovie,
-//   callback: (response: ApiResponse<IMovie>) => void
-// ): Promise<void> => {
-//   const endpoint = `${process.env.api_base_url}/movie/${movieId}`;
-//   try {
-//     const response = await http.put<IMovie>(endpoint, movie);
-//     callback({
-//       data: response.data,
-//       status: response.status,
-//       statusText: response.statusText,
-//     });
-//   } catch (error: any) {
-//     const fallbackResponse: ApiResponse<IMovie> = {
-//       data: null,
-//       status: error.response?.status || 500,
-//       statusText:
-//         error.response?.statusText ||
-//         "An error occurred while updating the movie.",
-//     };
-//     callback(fallbackResponse);
-//   }
-// };
+export const updateTask = async (
+  taskId: string,
+  task: ITask,
+  callback: (response: ApiResponse<ITask>) => void
+): Promise<void> => {
+  const endpoint = `${process.env.api_base_url}/task/${taskId}`;
+  try {
+    const response = await http.put<ITask>(endpoint, task);
+    callback({
+      data: response.data,
+      status: response.status,
+      statusText: response.statusText,
+    });
+  } catch (error: any) {
+    const fallbackResponse: ApiResponse<ITask> = {
+      data: null,
+      status: error.response?.status || 500,
+      statusText:
+        error.response?.statusText ||
+        "An error occurred while updating the Tasks.",
+    };
+    callback(fallbackResponse);
+  }
+};
 
-// export const deleteMovie = async (
-//   movieId: string,
-//   callback: (response: ApiResponse<null>) => void
-// ): Promise<void> => {
-//   const endpoint = `${process.env.api_base_url}/movie/${movieId}`;
-//   try {
-//     const response = await http.delete<null>(endpoint);
-//     callback({
-//       data: response.data,
-//       status: response.status,
-//       statusText: response.statusText,
-//     });
-//   } catch (error: any) {
-//     const fallbackResponse: ApiResponse<null> = {
-//       data: null,
-//       status: error.response?.status || 500,
-//       statusText:
-//         error.response?.statusText ||
-//         "An error occurred while deleting the movie.",
-//     };
-//     callback(fallbackResponse);
-//   }
-// };
+export const deleteTask = async (
+  taskId: string,
+  callback: (response: ApiResponse<null>) => void
+): Promise<void> => {
+  const endpoint = `${process.env.api_base_url}/task/${taskId}`;
+  try {
+    const response = await http.delete<null>(endpoint);
+    callback({
+      data: response.data,
+      status: response.status,
+      statusText: response.statusText,
+    });
+  } catch (error: any) {
+    const fallbackResponse: ApiResponse<null> = {
+      data: null,
+      status: error.response?.status || 500,
+      statusText:
+        error.response?.statusText ||
+        "An error occurred while deleting the Tasks.",
+    };
+    callback(fallbackResponse);
+  }
+};

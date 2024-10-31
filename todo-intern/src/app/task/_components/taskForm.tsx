@@ -4,7 +4,7 @@ import Input from "@/libs/components/input/input";
 import FormHandler from "react-form-buddy";
 import { useTaskStore } from "@/store/task.store";
 import axios from "axios";
-import { addMovie } from "@/services";
+import { addTask } from "@/services";
 
 interface TaskFormProps {
   onClose: () => void;
@@ -66,7 +66,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       description: values.description,
     };
   
-    await addMovie(newTask, (response) => {
+    await addTask(newTask, (response) => {
       if (response.status === 201 && response.data) {
         setTasksAction([...tasks, response.data]);
         console.log("Form submitted successfully!", response.data);
