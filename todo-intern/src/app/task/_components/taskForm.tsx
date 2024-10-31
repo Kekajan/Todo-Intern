@@ -1,15 +1,20 @@
+import React, { useEffect, useState } from "react";
 import { Button } from "@/libs/components/button/button";
 import Input from "@/libs/components/input/input";
-import { useState } from "react";
 import FormHandler from "react-form-buddy";
-import { ITask } from "@/libs/types/task";
 import { useTaskStore } from "@/store/task.store";
+import axios from "axios";
+import TextArea from "@/libs/components/textArea/textArea";
 
 interface TaskFormProps {
   onClose: () => void;
+  refreshTasks: () => void;
 }
 
-export const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
+export const TaskForm: React.FC<TaskFormProps> = ({
+  onClose,
+  refreshTasks,
+}) => {
   const [taskData, setTaskData] = useState({ title: "", description: "" });
 
   const { tasks, setTasksAction } = useTaskStore();
@@ -27,16 +32,26 @@ export const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
     return errors;
   };
 
-  const submitForm = () => {
-    const newTask: ITask = {
-      id: Math.floor(Math.random() * 10000),
-      title: values.title,
-      description: values.description,
-    };
+  const submitForm = async () => {
+    try {
+      const newTask = {
+        title: values.title,
+        description: values.description,
+      };
 
-    setTasksAction([newTask]);
-    console.log("Form submitted successfully!");
-    onClose && onClose();
+      const response = await axios.post(
+        "http://localhost:5000/api/task",
+        newTask
+      );
+      setTasksAction([...tasks, response.data]);
+      console.log("Form submitted successfully!", response.data);
+
+      // onClose && onClose();
+      refreshTasks();
+      onClose();
+    } catch (error) {
+      console.error("Error creating task:", error);
+    }
   };
 
   const { handleChange, handleSubmit, values, errors } = FormHandler(
@@ -58,14 +73,16 @@ export const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
         onChange={handleChange}
         className="text-gray-900"
       />
-      <div className="text-red-500">{errors.title}</div>
-      <Input
-        label="Description"
+      <div className="text-red-500">{errors.title}</div>    
+      <label className="block text-sm font-medium text-gray-700">
+        Description
+      </label>
+      <textarea
         name="description"
         placeholder="Enter task description"
         value={values.description || ""}
         onChange={handleChange}
-        className="text-gray-900"
+        className="text-gray-900 mt-1 block w-full rounded-md border-gray-50 shadow-sm focus:border-indigo-50 focus:ring-indigo-50 sm:text-sm"
       />
       <div className="text-red-500">{errors.description}</div>
       <div className="flex justify-end gap-x-4 mt-64">
